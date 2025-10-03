@@ -13,6 +13,8 @@ python src/train.py --loops 12 --evaluation-games 20 --checkpoint muzero_checkpo
 
 The default configuration performs 80 MCTS simulations per move and 12 training loops (10 self-play games and 240 optimisation steps per loop). Adjust `--loops`, `--evaluation-games`, and `--checkpoint` as required. The agent auto-selects `mps`, `cuda`, or CPU.
 
+> Run these commands from the repository root so Python can discover the package in `src/`.
+
 Evaluate a trained checkpoint (defaults to `muzero_checkpoint.pt`):
 
 ```bash

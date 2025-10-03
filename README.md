@@ -21,6 +21,16 @@ Evaluate a trained checkpoint (defaults to `muzero_checkpoint.pt`):
 python src/evaluate.py --games 80
 ```
 
+### Play in the browser
+
+Launch a minimal web UI that lets you play against the checkpoint directly:
+
+```bash
+python server-cli.py --checkpoint muzero_checkpoint.pt --port 8000
+```
+
+Use `--agent-first` if you want MuZero to open the game.
+
 ## Project Layout
 
 | Path | Description |

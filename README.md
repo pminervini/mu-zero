@@ -39,10 +39,9 @@ python evaluate.py --games 80
 
 ```mermaid
 flowchart LR
-    S[Game State] -->|Observation| R[Representation h_
-φ]
-    R --> M[MCTS (puct + dirichlet)]
-    M -->|Action| G[Self-Play Episode]
+    S[Game State] -->|observation| R[Representation h_phi]
+    R --> M[MCTS (PUCT + Dirichlet)]
+    M -->|action| G[Self-Play Episode]
     G --> B[Replay Buffer]
     B --> T[Training Loop]
     T --> R
@@ -51,11 +50,11 @@ flowchart LR
 ```mermaid
 flowchart TD
     subgraph MuZeroNet
-        O[Observation (2×3×3)] --> F1[Flatten]
+        O[Observation (2x3x3)] --> F1[Flatten]
         F1 --> H[Hidden State (tanh, 64)]
         H --> PV[Prediction: value]
         H --> PP[Prediction: policy logits]
-        H -->|+ Action One-Hot| D[Dynamic Transition]
+        H -->|concat action one-hot| D[Dynamic Transition]
         D --> NR[Reward Head]
         D --> NH[Next Hidden State]
     end

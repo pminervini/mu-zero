@@ -8,32 +8,31 @@ This project implements a compact MuZero agent that learns to play Tic-Tac-Toe v
 python -m venv .venv
 source .venv/bin/activate
 pip install torch numpy
-python MuZero/train.py --loops 12 --evaluation-games 20 --checkpoint MuZero/muzero_checkpoint.pt
+python src/train.py --loops 12 --evaluation-games 20 --checkpoint muzero_checkpoint.pt
 ```
 
 The default configuration performs 80 MCTS simulations per move and 12 training loops (10 self-play games and 240 optimisation steps per loop). Adjust `--loops`, `--evaluation-games`, and `--checkpoint` as required. The agent auto-selects `mps`, `cuda`, or CPU.
 
-Evaluate a trained checkpoint (defaults to `MuZero/muzero_checkpoint.pt`):
+Evaluate a trained checkpoint (defaults to `muzero_checkpoint.pt`):
 
 ```bash
-cd MuZero/src
-python evaluate.py --games 80
+python src/evaluate.py --games 80
 ```
 
 ## Project Layout
 
 | Path | Description |
 | --- | --- |
-| `MuZero/src/muzero_ttt/config.py` | Hyperparameters (`MuZeroConfig`) controlling search, optimisation, and device selection. |
-| `MuZero/src/muzero_ttt/game.py` | Deterministic Tic-Tac-Toe environment (`TicTacToe`) with observation encoding and win detection. |
-| `MuZero/src/muzero_ttt/rule_based.py` | Heuristic opponent (`RuleBasedAgent`) that plays optimal centre/edge/blocking strategy. |
-| `MuZero/src/muzero_ttt/network.py` | Tiny PyTorch model (`MuZeroNet`) implementing representation, dynamics, and prediction heads plus `NetworkOutput`. |
-| `MuZero/src/muzero_ttt/mcts.py` | MuZero-specific MCTS (`MCTS`, `Node`) with Dirichlet exploration and MinMax normalisation. |
-| `MuZero/src/muzero_ttt/mu_algorithm.py` | Training loop (`MuZeroAgent`), replay buffer, targets, and evaluation vs the rule-based benchmark. |
-| `MuZero/src/utils.py` | Device selection and reproducible seeding helpers. |
-| `MuZero/src/train.py` | Command-line training driver (loops of self-play → optimisation → evaluation). |
-| `MuZero/src/evaluate.py` | Standalone evaluation utility for checkpoints. |
-| `MuZero/muzero_checkpoint.pt` | Pretrained weights from the unbeaten run (0 losses / 80 games). |
+| `src/muzero_ttt/config.py` | Hyperparameters (`MuZeroConfig`) controlling search, optimisation, and device selection. |
+| `src/muzero_ttt/game.py` | Deterministic Tic-Tac-Toe environment (`TicTacToe`) with observation encoding and win detection. |
+| `src/muzero_ttt/rule_based.py` | Heuristic opponent (`RuleBasedAgent`) that plays optimal centre/edge/blocking strategy. |
+| `src/muzero_ttt/network.py` | Tiny PyTorch model (`MuZeroNet`) implementing representation, dynamics, and prediction heads plus `NetworkOutput`. |
+| `src/muzero_ttt/mcts.py` | MuZero-specific MCTS (`MCTS`, `Node`) with Dirichlet exploration and MinMax normalisation. |
+| `src/muzero_ttt/mu_algorithm.py` | Training loop (`MuZeroAgent`), replay buffer, targets, and evaluation vs the rule-based benchmark. |
+| `src/muzero_ttt/utils.py` | Device selection and reproducible seeding helpers. |
+| `src/train.py` | Command-line training driver (loops of self-play → optimisation → evaluation). |
+| `src/evaluate.py` | Standalone evaluation utility for checkpoints. |
+| `muzero_checkpoint.pt` | Pretrained weights from the unbeaten run (0 losses / 80 games). |
 
 ## How the Pieces Fit
 
@@ -86,7 +85,7 @@ flowchart TD
 
 ## Results
 
-Training with the default configuration (`python MuZero/train.py --loops 12 --evaluation-games 20 --checkpoint MuZero/muzero_checkpoint.pt`) converged to an agent that draws every game against the rule-based benchmark:
+Training with the default configuration (`python src/train.py --loops 12 --evaluation-games 20 --checkpoint muzero_checkpoint.pt`) converged to an agent that draws every game against the rule-based benchmark:
 
 ```
 {
